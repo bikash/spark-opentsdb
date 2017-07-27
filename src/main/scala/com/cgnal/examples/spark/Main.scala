@@ -52,17 +52,17 @@ object Main extends App {
 
   val uberJarLocation = {
     val location = getJar(Main.getClass)
-    if (new File(location).isDirectory) s"${System.getProperty("user.dir")}/assembly/target/scala-2.11/spark-opentsdb-assembly-2.0.jar" else location
+    if (new File(location).isDirectory) s"${System.getProperty("user.dir")}/assembly/target/scala-2.12/spark-opentsdb-assembly-2.0.jar" else location
   }
 
   if (master.isEmpty) {
     //it means that we are NOT using spark-submit
 
-    addPath(args(0))
+    //addPath("/user/bikaa")
 
     if (yarn)
       conf.
-        setMaster("yarn-client").
+        setMaster("local").
         setAppName("spark-cdh5-template-yarn").
         setJars(List(uberJarLocation)).
         set("spark.serializer", "org.apache.spark.serializer.KryoSerializer").
@@ -103,11 +103,7 @@ object Main extends App {
   val start = System.currentTimeMillis()
 
   implicit val sqlContext: SQLContext = sparkSession.sqlContext
-  rdd.toDF.write.options(Map(
-    "opentsdb.keytabLocalTempDir" -> "/tmp",
-    "opentsdb.keytab" -> args(1),
-    "opentsdb.principal" -> args(2)
-  )).mode("append").opentsdb()
+  rdd.toDF.write.mode("append").opentsdb()
   val stop = System.currentTimeMillis()
   println(s"$N data point written in ${stop - start} milliseconds")
 
@@ -118,9 +114,9 @@ object Main extends App {
     val df = sparkSession.read.options(Map(
       "opentsdb.metric" -> s"mymetric$i",
       "opentsdb.tags" -> "key1->value1,key2->value2",
-      "opentsdb.keytabLocalTempDir" -> "/tmp",
-      "opentsdb.keytab" -> args(1),
-      "opentsdb.principal" -> args(2)
+      "opentsdb.keytabLocalTempDir" -> "/tmp"
+      //"opentsdb.keytab" -> args(1),
+      //"opentsdb.principal" -> args(2)
     )).opentsdb
 
     val start = System.currentTimeMillis()

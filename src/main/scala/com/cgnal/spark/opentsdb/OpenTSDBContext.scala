@@ -31,7 +31,7 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{ DataFrame, Row, SparkSession }
 import org.apache.spark.streaming.dstream.DStream
-import shaded.org.hbase.async.KeyValue
+import org.hbase.async.KeyValue
 
 import scala.collection.convert.decorateAsScala._
 import scala.collection.mutable.ListBuffer
@@ -540,7 +540,7 @@ class OpenTSDBContext(@transient val sparkSession: SparkSession, configurator: O
         StructField("tags", DataTypes.createMapType(StringType, StringType), nullable = false)
       )
     ))
-    timeseries.foreachPartition(it => {
+    timeseries.rdd.foreachPartition(it => {
       TSDBClientManager.init(
         keytabLocalTempDir = keytabLocalTempDir_,
         keytabData = keytabData_,
@@ -568,7 +568,6 @@ class OpenTSDBContext(@transient val sparkSession: SparkSession, configurator: O
             false
           } else
             it.hasNext
-
         override def next(): DataPoint[Double] = {
           val row = it.next()
           DataPoint(

@@ -17,7 +17,7 @@
 package net.opentsdb.tools
 
 import net.opentsdb.core.TSDB
-import shaded.org.hbase.async.HBaseClient
+import org.hbase.async.HBaseClient
 
 @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf", "org.wartremover.warts.Null"))
 object FileImporter {

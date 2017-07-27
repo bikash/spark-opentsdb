@@ -19,12 +19,13 @@ package com.cgnal.spark.opentsdb
 import net.opentsdb.core.TSDB
 import net.opentsdb.utils.Config
 import org.apache.hadoop.conf.Configuration
-import org.apache.hadoop.hbase.{ HBaseConfiguration, HBaseTestingUtility, TableName }
+import org.apache.hadoop.hbase.{ HBaseConfiguration, TableName }
+import org.apache.hadoop.hbase.HBaseTestingUtility
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.{ Milliseconds, StreamingContext }
 import org.scalatest.{ BeforeAndAfterAll, MustMatchers, WordSpec }
-import shaded.org.hbase.async.HBaseClient
+import org.hbase.async.HBaseClient
 
 import scala.collection.convert.decorateAsScala._
 

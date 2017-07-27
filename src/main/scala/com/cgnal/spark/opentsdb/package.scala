@@ -35,7 +35,7 @@ import org.apache.log4j.Logger
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
 import org.apache.spark.sql.types._
-import shaded.org.hbase.async.{ HBaseRpc, PleaseThrottleException, PutRequest }
+import org.hbase.async.{ HBaseRpc, PleaseThrottleException, PutRequest }
 
 import scala.collection.convert.decorateAsJava._
 import scala.collection.mutable

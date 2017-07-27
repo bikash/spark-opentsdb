@@ -27,7 +27,7 @@ import org.apache.commons.pool2.{ BasePooledObjectFactory, PooledObject }
 import org.apache.hadoop.conf.Configuration
 import org.apache.log4j.Logger
 import org.apache.spark.broadcast.Broadcast
-import shaded.org.hbase.async.HBaseClient
+import org.hbase.async.HBaseClient
 
 import scala.collection.convert.decorateAsJava._
 
@@ -83,7 +83,7 @@ object TSDBClientManager {
   private[opentsdb] var config_ : Option[Config] = None
 
   @SuppressWarnings(Array("org.wartremover.warts.Var"))
-  private[opentsdb] var asyncConfig_ : Option[shaded.org.hbase.async.Config] = None
+  private[opentsdb] var asyncConfig_ : Option[org.hbase.async.Config] = None
 
   /**
    *
@@ -124,7 +124,7 @@ object TSDBClientManager {
       val authenticationType = configuration.get("hbase.security.authentication")
       val quorum = configuration.get("hbase.zookeeper.quorum")
       val port = configuration.get("hbase.zookeeper.property.clientPort")
-      val asyncConfig = new shaded.org.hbase.async.Config()
+      val asyncConfig = new org.hbase.async.Config()
       val config = new Config(false)
       config.overrideConfig("tsd.storage.hbase.data_table", tsdbTable)
       config.overrideConfig("tsd.storage.hbase.uid_table", tsdbUidTable)
